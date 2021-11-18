@@ -1,0 +1,50 @@
+version: "3.9"
+services:
+
+  rabbitmq:
+    container_name: rabbitmq
+    hostname: rabbitmq
+    image: rabbitmq:3.9-management-alpine
+    ports:
+      - 5672:5672
+      - 15672:15672
+    volumes:
+        - rabbitmqdata:/var/lib/rabbitmq
+        - rabbitmqlog:/var/log/rabbitmq
+    environment:
+      RABBITMQ_DEFAULT_USER: admin
+      RABBITMQ_DEFAULT_PASS: admin
+      RABBITMQ_QUEUE_NAME: hey
+      RABBITMQ_USER: admin
+      RABBITMQ_PASSWORD: admin
+    restart: always
+  
+  emit_log_topic:
+    container_name: emit_log_topic
+    hostname: emit_log_topic
+    build:
+      context: ./emit_log_topic
+      dockerfile: Dockerfile
+    entrypoint: ["/bin/sh","-c"]
+    command:
+      - |
+        ./entrypoint.sh
+    depends_on:
+      - rabbitmq
+
+  receive_logs_topic:
+    container_name: receive_logs_topic
+    hostname: receive_logs_topic
+    build:
+      context: ./receive_logs_topic
+      dockerfile: Dockerfile
+    entrypoint: ["/bin/sh","-c"]
+    command:
+      - |
+        ./entrypoint.sh
+    depends_on:
+      - rabbitmq
+
+volumes:
+  rabbitmqdata:
+  rabbitmqlog:
