@@ -23,6 +23,14 @@ sudo docker-compose up
 * Github: [@ggingmin](https://github.com/ggingmin)
 * LinkedIn: [@ggingmin](https://linkedin.com/in/ggingmin)
 
+
+## OSS License
+* **rabbitmq-tutorials**
+  * https://github.com/rabbitmq/rabbitmq-tutorials
+  * Copyright 2007-2015 Pivotal Software, Inc.
+  * Apache License 2.0
+
+
 ## Show your support
 
 Give a ⭐️ if this project helped you!
