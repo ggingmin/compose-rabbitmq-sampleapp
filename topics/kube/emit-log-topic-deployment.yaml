@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert
+    kompose.version: 1.26.0 (HEAD)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: emit-log-topic
+  name: emit-log-topic
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: emit-log-topic
+  strategy: {}
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: kompose convert
+        kompose.version: 1.26.0 (HEAD)
+      creationTimestamp: null
+      labels:
+        io.kompose.service: emit-log-topic
+    spec:
+      containers:
+        - args:
+            - |
+              ./entrypoint.sh
+          command:
+            - /bin/sh
+            - -c
+          image: emit-log-topic
+          name: emit-log-topic
+          resources: {}
+      hostname: emit_log_topic
+      restartPolicy: Always
+status: {}

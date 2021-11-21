@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert
+    kompose.version: 1.26.0 (HEAD)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: receive-logs-topic
+  name: receive-logs-topic
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: receive-logs-topic
+  strategy: {}
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: kompose convert
+        kompose.version: 1.26.0 (HEAD)
+      creationTimestamp: null
+      labels:
+        io.kompose.service: receive-logs-topic
+    spec:
+      containers:
+        - args:
+            - |
+              ./entrypoint.sh
+          command:
+            - /bin/sh
+            - -c
+          image: receive-logs-topic
+          name: receive-logs-topic
+          resources: {}
+      hostname: receive_logs_topic
+      restartPolicy: Always
+status: {}

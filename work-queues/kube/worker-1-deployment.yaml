@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert
+    kompose.version: 1.26.0 (HEAD)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: worker-1
+  name: worker-1
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: worker-1
+  strategy: {}
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: kompose convert
+        kompose.version: 1.26.0 (HEAD)
+      creationTimestamp: null
+      labels:
+        io.kompose.service: worker-1
+    spec:
+      containers:
+        - args:
+            - |
+              ./entrypoint.sh
+          command:
+            - /bin/sh
+            - -c
+          image: worker-1
+          name: worker-1
+          resources: {}
+      hostname: worker-1
+      restartPolicy: Always
+status: {}

@@ -1,0 +1,59 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert
+    kompose.version: 1.26.0 (HEAD)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: rabbitmq
+  name: rabbitmq
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: rabbitmq
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: kompose convert
+        kompose.version: 1.26.0 (HEAD)
+      creationTimestamp: null
+      labels:
+        io.kompose.service: rabbitmq
+    spec:
+      containers:
+        - env:
+            - name: RABBITMQ_DEFAULT_PASS
+              value: admin
+            - name: RABBITMQ_DEFAULT_USER
+              value: admin
+            - name: RABBITMQ_PASSWORD
+              value: admin
+            - name: RABBITMQ_QUEUE_NAME
+              value: hey
+            - name: RABBITMQ_USER
+              value: admin
+          image: rabbitmq:3.9-management-alpine
+          name: rabbitmq
+          ports:
+            - containerPort: 5672
+            - containerPort: 15672
+          resources: {}
+          volumeMounts:
+            - mountPath: /var/lib/rabbitmq
+              name: rabbitmqdata
+            - mountPath: /var/log/rabbitmq
+              name: rabbitmqlog
+      hostname: rabbitmq
+      restartPolicy: Always
+      volumes:
+        - name: rabbitmqdata
+          persistentVolumeClaim:
+            claimName: rabbitmqdata
+        - name: rabbitmqlog
+          persistentVolumeClaim:
+            claimName: rabbitmqlog
+status: {}
